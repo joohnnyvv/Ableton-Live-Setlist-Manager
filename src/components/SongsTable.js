@@ -22,7 +22,7 @@ export default function SongsTable({ songs, selectedSong, setSelectedSong }) {
                     onClick={() => {setSelectedSong(song.id)}}
                 >
                     <td>{index + 1}</td>
-                    <td>{song.title}</td>
+                    <td>{song.name}</td>
                 </tr>
             ))}
             </tbody>

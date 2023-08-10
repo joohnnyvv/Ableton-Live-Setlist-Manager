@@ -3,40 +3,49 @@ import SongsTable from "./SongsTable";
 import {useEffect, useState} from "react";
 import {IoMdPlay} from "react-icons/io";
 import {BiSolidSquare, BiSolidDownArrowAlt, BiSolidUpArrowAlt} from "react-icons/bi";
-import songsModel from "../songs.json";
 import logo from "../assets/Ableton_logo.png";
 
 export default function SetlistSection() {
 
-    const [songs, setSongs] = useState([]);
+    const [cues, setCues] = useState([]);
     const [selectedSong, setSelectedSong] = useState(-1)
     const [isPlaying, setIsPlaying] = useState(false);
 
     useEffect(() => {
-        const mappedSongs = songsModel.map((song) => ({
-            id: song.id,
-            title: song.title
-        }));
-        setSongs(mappedSongs);
+        async function fetchCues() {
+            try {
+                const response = await fetch("http://localhost:3001/cues");
+                const fetchedCues = await response.json();
+                setCues(fetchedCues);
+            } catch (error) {
+                console.error("Error fetching cues:", error);
+            }
+        }
+
+        fetchCues();
     }, []);
 
+    useEffect(() => {
+        console.log(cues);
+    }, [cues]);
+
     const handleMoveSongUp = (songId, e) => {
-        const songIndex = songs.findIndex((song) => song.id === songId);
+        const songIndex = cues.findIndex((song) => song.id === songId);
         if (songIndex > 0) {
-            const updatedSongs = [...songs];
+            const updatedSongs = [...cues];
             const [movedSong] = updatedSongs.splice(songIndex, 1);
             updatedSongs.splice(songIndex - 1, 0, movedSong);
-            setSongs(updatedSongs);
+            setCues(updatedSongs);
         }
     };
 
     const handleMoveSongDown = (songId, e) => {
-        const songIndex = songs.findIndex((song) => song.id === songId);
-        if (songIndex < songs.length - 1) {
-            const updatedSongs = [...songs];
+        const songIndex = cues.findIndex((song) => song.id === songId);
+        if (songIndex < cues.length - 1) {
+            const updatedSongs = [...cues];
             const [movedSong] = updatedSongs.splice(songIndex, 1);
             updatedSongs.splice(songIndex + 1, 0, movedSong);
-            setSongs(updatedSongs);
+            setCues(updatedSongs);
         }
     };
 
@@ -45,7 +54,7 @@ export default function SetlistSection() {
             <img src={logo} alt={"Ableton Logo"} className={styles.logo}/>
             <h2>Setlist Management</h2>
             <div className={styles.tableWrapper}>
-                <SongsTable songs={songs} selectedSong={selectedSong} setSelectedSong={setSelectedSong}/>
+                <SongsTable songs={cues} selectedSong={selectedSong} setSelectedSong={setSelectedSong}/>
                 <div className={styles.buttonsWrapper}>
                     <BiSolidUpArrowAlt
                         className={styles.orderManageButton}
