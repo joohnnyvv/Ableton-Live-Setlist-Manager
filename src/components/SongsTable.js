@@ -1,4 +1,4 @@
-import { Table, Button } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import styles from "../styles/songsTable.module.css";
 
 export default function SongsTable({ songs, selectedSong, setSelectedSong }) {
