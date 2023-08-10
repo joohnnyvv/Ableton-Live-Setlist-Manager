@@ -16,16 +16,23 @@
 .buttonsWrapper {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
-.iconButton {
+.orderManageButton {
     width: 27px;
+    height: auto;
     user-select: none;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background-color: #858585;
 }
 
-.iconButton:hover {
+.orderManageButton:hover {
     cursor: pointer;
+    background-color: #aaaaaa;
 }
 
 .mediaButtonsWrapper {
@@ -61,4 +68,11 @@
     margin-right: 13px;
     margin-left: 12px;
     cursor: pointer;
+}
+
+.logo {
+    height: 70px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
 }

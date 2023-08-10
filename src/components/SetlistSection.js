@@ -1,10 +1,10 @@
 import styles from "../styles/setlistSection.module.css";
 import SongsTable from "./SongsTable";
 import {useEffect, useState} from "react";
-import {RiArrowDownCircleLine, RiArrowUpCircleLine} from "react-icons/ri";
 import {IoMdPlay} from "react-icons/io";
-import {BiSolidSquare} from "react-icons/bi";
+import {BiSolidSquare, BiSolidDownArrowAlt, BiSolidUpArrowAlt} from "react-icons/bi";
 import songsModel from "../songs.json";
+import logo from "../assets/Ableton_logo.png";
 
 export default function SetlistSection() {
 
@@ -42,16 +42,17 @@ export default function SetlistSection() {
 
     return (
         <div className={styles.setlistSectionBody}>
-            <h2>SETLIST MANAGEMENT</h2>
+            <img src={logo} alt={"Ableton Logo"} className={styles.logo}/>
+            <h2>Setlist Management</h2>
             <div className={styles.tableWrapper}>
                 <SongsTable songs={songs} selectedSong={selectedSong} setSelectedSong={setSelectedSong}/>
                 <div className={styles.buttonsWrapper}>
-                    <RiArrowUpCircleLine
-                        className={styles.iconButton}
+                    <BiSolidUpArrowAlt
+                        className={styles.orderManageButton}
                         onClick={() => handleMoveSongUp(selectedSong)}
                     />
-                    <RiArrowDownCircleLine
-                        className={styles.iconButton}
+                    <BiSolidDownArrowAlt
+                        className={styles.orderManageButton}
                         onClick={() => handleMoveSongDown(selectedSong)}
                     />
                 </div>
