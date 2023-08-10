@@ -1,0 +1,17 @@
+.songsTableBody {
+    font-size: 35px;
+    width: 90%;
+    margin-right: 20px;
+}
+
+.evenRow {
+    background-color: #858585;
+}
+
+.oddRow {
+    background-color: #8b8b8b;
+}
+
+.selectedRow {
+    background-color: #aaaaaa;
+}

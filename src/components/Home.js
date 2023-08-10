@@ -1,11 +1,11 @@
 import styles from "../styles/home.module.css";
-import SetlistCard from "./SetlistCard";
+import SetlistSection from "./SetlistSection";
 
 export default function Home() {
 
     return (
         <div className={styles.homeBody}>
-            <SetlistCard />
+            <SetlistSection />
         </div>
     )
 }

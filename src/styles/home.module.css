@@ -1,8 +1,8 @@
+
 .homeBody {
     height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     padding-top: 5%;
-    font-family: 'Didact Gothic', sans-serif;
 }
