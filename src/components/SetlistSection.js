@@ -9,45 +9,34 @@ import axios from "axios";
 export default function SetlistSection() {
 
     const [cues, setCues] = useState([]);
+    const [movableCues, setMovableCues] = useState([]);
     const [selectedSongId, setSelectedSongId] = useState(null)
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
-    const [songRange, setSongRange] = useState([]);
 
     useEffect(() => {
         async function fetchCues() {
             try {
                 const response = await axios.get("http://localhost:3001/cues");
                 const fetchedCues = response.data;
-                console.log("Fetched", fetchedCues);
                 setCues(fetchedCues);
-                const generateSongTimeRanges = (cues) => {
-                    const songRanges = [];
-                    for (let i = 0; i < cues.length - 1; i++) {
-                        const startTime = cues[i].time;
-                        const endTime = cues[i + 1].time;
-                        songRanges.push({
-                            id: cues[i].id,
-                            start_time: startTime,
-                            end_time: endTime,
-                        });
-                    }
-                    console.log("Ranges", songRanges);
-                    return songRanges;
-                };
-
-                const generatedSongRange = generateSongTimeRanges(fetchedCues);
-                setSongRange(generatedSongRange);
+                setMovableCues(fetchedCues);
             } catch (error) {
                 console.error("Error fetching cues:", error);
             }
         }
+
         fetchCues();
     }, []);
 
     useEffect(() => {
-        console.log("Ranges", songRange);
-    }, [songRange]);
+        const updatedCues = cues.map(cue => ({
+            ...cue,
+            stopOnFinish: true
+        }));
+        setMovableCues(updatedCues);
+    }, [cues]);
+
 
     const startPlaying = async () => {
         try {
@@ -68,8 +57,6 @@ export default function SetlistSection() {
 
     const sendCueData = async (cueData) => {
         try {
-            console.log("Sending cue data:", cueData);
-
             const response = await axios.post("http://localhost:3001/send-cue", cueData, {
                 headers: {
                     "Content-Type": "application/json"
@@ -82,10 +69,9 @@ export default function SetlistSection() {
         }
     };
 
-
     const sendSelectedCue = async () => {
         if (selectedSongId !== null) {
-            const selectedCue = cues.find((cue) => cue.id === selectedSongId);
+            const selectedCue = movableCues.find((cue) => cue.id === selectedSongId);
             if (selectedCue) {
                 sendCueData(selectedCue);
             } else {
@@ -96,6 +82,7 @@ export default function SetlistSection() {
 
     useEffect(() => {
         sendSelectedCue();
+        console.log("SENDING CUE!")
     }, [selectedSongId]);
 
     const fetchIsPlaying = async () => {
@@ -128,16 +115,15 @@ export default function SetlistSection() {
     }, []);
 
     const advanceToNextSong = () => {
-        console.log("Current time: ", currentTime);
-        console.log("Selected id: ", selectedSongId);
+        const currentSongIndex = movableCues.findIndex(song => song.id === selectedSongId);
         if (selectedSongId !== "") {
-            const currentSongIndex = cues.findIndex(song => song.id === selectedSongId);
             if (currentSongIndex !== -1) {
-                const currentSongRange = songRange[currentSongIndex];
-                console.log("end_time", currentSongRange.end_time);
-                if (currentTime >= currentSongRange.end_time) {
-                    if (currentSongIndex < cues.length - 1) {
-                        setSelectedSongId(cues[currentSongIndex + 1].id);
+                if (currentTime >= cues[cues.findIndex(song => song.id === selectedSongId) + 1].time) {
+                    if (movableCues[currentSongIndex].stopOnFinish === true && currentSongIndex < cues.length - 1) {
+                        stopPlaying();
+                        setSelectedSongId(movableCues[currentSongIndex + 1].id);
+                    } else if (currentSongIndex < cues.length - 1) {
+                        setSelectedSongId(movableCues[currentSongIndex + 1].id);
                     }
                 }
             }
@@ -149,22 +135,22 @@ export default function SetlistSection() {
     }, [currentTime]);
 
     const handleMoveSongUp = (songId, e) => {
-        const songIndex = cues.findIndex((song) => song.id === songId);
+        const songIndex = movableCues.findIndex((song) => song.id === songId);
         if (songIndex > 0) {
-            const updatedSongs = [...cues];
+            const updatedSongs = [...movableCues];
             const [movedSong] = updatedSongs.splice(songIndex, 1);
             updatedSongs.splice(songIndex - 1, 0, movedSong);
-            setCues(updatedSongs);
+            setMovableCues(updatedSongs);
         }
     };
 
     const handleMoveSongDown = (songId, e) => {
-        const songIndex = cues.findIndex((song) => song.id === songId);
+        const songIndex = movableCues.findIndex((song) => song.id === songId);
         if (songIndex < cues.length - 1) {
-            const updatedSongs = [...cues];
+            const updatedSongs = [...movableCues];
             const [movedSong] = updatedSongs.splice(songIndex, 1);
             updatedSongs.splice(songIndex + 1, 0, movedSong);
-            setCues(updatedSongs);
+            setMovableCues(updatedSongs);
         }
     };
 
@@ -174,13 +160,22 @@ export default function SetlistSection() {
     const handleStopClick = () => {
         stopPlaying();
     }
+    const handleStopOnFinishClick = (index) => {
+        const updatedCues = [...movableCues];
+        updatedCues[index] = {
+            ...updatedCues[index],
+            stopOnFinish: !updatedCues[index].stopOnFinish,
+        };
+        setMovableCues(updatedCues);
+    }
 
     return (
         <div className={styles.setlistSectionBody}>
             <img src={logo} alt={"Ableton Logo"} className={styles.logo}/>
             <h2>Setlist Management</h2>
             <div className={styles.tableWrapper}>
-                <SongsTable songs={cues} selectedSong={selectedSongId} setSelectedSong={setSelectedSongId}/>
+                <SongsTable songs={movableCues} selectedSongId={selectedSongId} setSelectedSongId={setSelectedSongId}
+                            handleStopOnFinishClick={handleStopOnFinishClick}/>
                 <div className={styles.buttonsWrapper}>
                     <BiSolidUpArrowAlt
                         className={styles.orderManageButton}
