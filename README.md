@@ -1,70 +1,59 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Ableton Live Setlist Manager
+![Zrzut ekranu 2023-08-15 235238](https://github.com/joohnnyvv/Ableton-Live-Setlist-Manager/assets/110868938/6be63a7a-42a3-4e31-af1c-397c14016c18)
 
-## Available Scripts
 
-In the project directory, you can run:
+The Ableton Live Setlist Manager is a user-friendly application designed to help musicians, DJs, and performers efficiently manage their setlists within Ableton Live, the renowned digital audio workstation. This app aims to simplify the process of organizing and navigating through your performance, offering essential features to enhance your live shows.
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Seamless Integration**: Effortlessly import your Ableton Live markers, cues, and segments into the app, ensuring perfect synchronization between the app and your Ableton Live set.
 
-### `npm test`
+- **Intuitive Setlist Creation**: Create and arrange setlists with ease, allowing you to sequence songs, cues, and segments in the desired order for a smooth performance flow.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Playback Control**: Control playback directly from the app, eliminating the need to switch between Ableton Live and other tools.
 
-### `npm run build`
+- **Flexible Stop-On-Finish Option**: Choose whether each song stops automatically after completion or seamlessly transitions to the next, providing a versatile approach to your performance dynamics.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Getting Started
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Install the Ableton Live Setlist Manager app on your device.
+- Run a server to communicate with Ableton Live: https://github.com/joohnnyvv/setlist-mgmt-server
+- Organize your setlist by arranging songs to create your performance sequence.
+- You can decide if you want to stop the set after the song is over by clicking the icon on the right side.
+- Configure settings to align with your live show preferences.
+- Experience a streamlined setlist management process during your live performances.
+## Requirements
 
-### `npm run eject`
+- Ableton Live installed.
+- [ableton-js](https://github.com/leolabs/ableton-js) remote scripts added. You can find instructions on how to configure the ableton-js library in its repository.
+- Device with the Ableton Live Setlist Manager app installed
+## Run Locally
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Follow these steps to get the setlist management app up and running on your local machine:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Clone the Repository:**
+  
+        git clone https://github.com/joohnnyvv/Ableton-Live-Setlist-Manager.git
+  
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. **Clone and Configure [Server Repository](https://github.com/joohnnyvv/setlist-mgmt-server)**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. **Install Dependencies:**
+  
+        npm install
+  
 
-## Learn More
+4. **Run the [Server](https://github.com/joohnnyvv/setlist-mgmt-server)**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. **Run the Application:**
+  
+        npm start
+  
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Now you have the setlist management app up and running locally. The client-side web application will be accessible at http://localhost:3000 and the server will be running on http://localhost:3001.
+## Contributing
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Contributions to the Ableton Live Setlist Manager app are encouraged! Feel free to share feature suggestions, bug reports, or improvements by opening an issue or submitting a pull request.
