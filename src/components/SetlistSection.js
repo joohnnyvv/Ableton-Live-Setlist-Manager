@@ -5,6 +5,7 @@ import {IoMdPlay} from "react-icons/io";
 import {BiSolidSquare, BiSolidDownArrowAlt, BiSolidUpArrowAlt} from "react-icons/bi";
 import logo from "../assets/Ableton_logo.png";
 import axios from "axios";
+import { startPlaying, stopPlaying, fetchCurrentTime, fetchIsPlaying, sendCueData } from "../api/api";
 
 export default function SetlistSection() {
 
@@ -37,37 +38,24 @@ export default function SetlistSection() {
         setMovableCues(updatedCues);
     }, [cues]);
 
+    useEffect(() => {
+        const intervalId = setInterval(async () => {
+            try {
+                const isPlayingValue = await fetchIsPlaying();
+                setIsPlaying(isPlayingValue);
 
-    const startPlaying = async () => {
-        try {
-            const response = await axios.get("http://localhost:3001/start-playing");
-            console.log(response.data.message);
-        } catch (error) {
-            console.error("An error occurred:", error);
-        }
-    };
-    const stopPlaying = async () => {
-        try {
-            const response = await axios.get("http://localhost:3001/stop-playing");
-            console.log(response.data.message);
-        } catch (error) {
-            console.error("An error occurred:", error);
-        }
-    };
+                const currentTimeValue = await fetchCurrentTime();
+                setCurrentTime(currentTimeValue);
+            } catch (error) {
+                console.error("Error fetching time/is playing", error);
+            }
+        }, 1000);
 
-    const sendCueData = async (cueData) => {
-        try {
-            const response = await axios.post("http://localhost:3001/send-cue", cueData, {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, []);
 
-            console.log(response.data);
-        } catch (error) {
-            console.error("Error sending cue:", error);
-        }
-    };
 
     const sendSelectedCue = async () => {
         if (selectedSongId !== null) {
@@ -84,25 +72,6 @@ export default function SetlistSection() {
         sendSelectedCue();
         console.log("SENDING CUE!")
     }, [selectedSongId]);
-
-    const fetchIsPlaying = async () => {
-        try {
-            const response = await axios.get("http://localhost:3001/is-playing");
-            const isPlayingValue = response.data.isPlaying;
-            setIsPlaying(isPlayingValue);
-        } catch (error) {
-            console.error("Error fetching playing status:", error);
-        }
-    };
-    const fetchCurrentTime = async () => {
-        try {
-            const response = await axios.get("http://localhost:3001/current-time");
-            const currentTimeValue = response.data.currentTime;
-            setCurrentTime(currentTimeValue);
-        } catch (error) {
-            console.error("Error fetching playing status:", error);
-        }
-    };
 
     useEffect(() => {
         const intervalId = setInterval(async () => {
