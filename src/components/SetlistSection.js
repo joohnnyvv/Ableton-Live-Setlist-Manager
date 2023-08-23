@@ -1,11 +1,11 @@
 import styles from "../styles/setlistSection.module.css";
 import SongsTable from "./SongsTable";
 import {useEffect, useState} from "react";
-import {IoMdPlay} from "react-icons/io";
-import {BiSolidSquare, BiSolidDownArrowAlt, BiSolidUpArrowAlt} from "react-icons/bi";
+import {BiSolidDownArrowAlt, BiSolidUpArrowAlt} from "react-icons/bi";
 import logo from "../assets/Ableton_logo.png";
 import axios from "axios";
 import { startPlaying, stopPlaying, fetchCurrentTime, fetchIsPlaying, sendCueData } from "../api/api";
+import MediaButtons from "./MediaButtons";
 
 export default function SetlistSection() {
 
@@ -156,14 +156,11 @@ export default function SetlistSection() {
                     />
                 </div>
             </div>
-            <div className={styles.mediaButtonsWrapper}>
-                <IoMdPlay
-                    className={`${isPlaying ? styles.mediaButtonPlaying : styles.mediaButton}`}
-                    onClick={handlePlayClick}/>
-                <BiSolidSquare
-                    className={styles.mediaButton}
-                    onClick={handleStopClick}/>
-            </div>
+            <MediaButtons
+                isPlaying={isPlaying}
+                handlePlayClick={handlePlayClick}
+                handleStopClick={handleStopClick}
+            />
         </div>
     )
 }

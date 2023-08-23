@@ -36,7 +36,7 @@ export async function sendCueData(cueData){
 export async function fetchIsPlaying() {
     try {
         const response = await axios.get(`${API_BASE_URL}/is-playing`);
-        const isPlayingValue = response.data.isPlaying;
+        return response.data.isPlaying;
     } catch (error) {
         console.error("Error fetching playing status:", error);
     }
@@ -44,7 +44,7 @@ export async function fetchIsPlaying() {
 export async function fetchCurrentTime(){
     try {
         const response = await axios.get(`${API_BASE_URL}/current-time`);
-        const currentTimeValue = response.data.currentTime;
+        return response.data.currentTime;
     } catch (error) {
         console.error("Error fetching playing status:", error);
     }
