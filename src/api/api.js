@@ -9,7 +9,7 @@ export async function startPlaying(){
     } catch (error) {
         console.error("An error occurred:", error);
     }
-};
+}
 export async function stopPlaying() {
     try {
         const response = await axios.get(`${API_BASE_URL}/stop-playing`);
@@ -17,7 +17,7 @@ export async function stopPlaying() {
     } catch (error) {
         console.error("An error occurred:", error);
     }
-};
+}
 
 export async function sendCueData(cueData){
     try {
@@ -31,7 +31,7 @@ export async function sendCueData(cueData){
     } catch (error) {
         console.error("Error sending cue:", error);
     }
-};
+}
 
 export async function fetchIsPlaying() {
     try {
@@ -40,7 +40,7 @@ export async function fetchIsPlaying() {
     } catch (error) {
         console.error("Error fetching playing status:", error);
     }
-};
+}
 export async function fetchCurrentTime(){
     try {
         const response = await axios.get(`${API_BASE_URL}/current-time`);
@@ -48,4 +48,4 @@ export async function fetchCurrentTime(){
     } catch (error) {
         console.error("Error fetching playing status:", error);
     }
-};
+}
