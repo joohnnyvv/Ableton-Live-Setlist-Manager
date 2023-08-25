@@ -54,6 +54,16 @@ Follow these steps to get the setlist management app up and running on your loca
   
 
 Now you have the setlist management app up and running locally. The client-side web application will be accessible at http://localhost:3000 and the server will be running on http://localhost:3001.
+
+
+## Usage Instructions
+
+- **Add cues in Ableton Live** - Add two markers to each song (one at the beginning and one at the end of the song).
+- **Rename the final markers** - In order for the end markers to perform their function (be a reference point for the application on where the song ends), but not be visible in the UI, they must be named as "end_cue"
+- **Decide what should happen after the song ends** - There is an icon next to each song, click on it to change Ableton Live's behavior when the song ends. The "play" icon means that when you reach the final marker, the program will automatically jump to the next song in the set. The "stop" icon means that the project will stop and you must manually skip to the next song
+- **Change the order in the set** - Using the navigation buttons on the right, change the order of the songs in your setlist
+- **Start playing!** - Use the media buttons at the bottom to play/stop your project
+
 ## Contributing
 
 Contributions to the Ableton Live Setlist Manager app are encouraged! Feel free to share feature suggestions, bug reports, or improvements by opening an issue or submitting a pull request.
