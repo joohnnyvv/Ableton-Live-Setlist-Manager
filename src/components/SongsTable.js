@@ -1,6 +1,7 @@
 import {Table} from "react-bootstrap";
 import styles from "../styles/songsTable.module.css";
 import {AiFillStop} from "react-icons/ai";
+import {IoMdPlay} from "react-icons/io";
 
 export default function SongsTable({songs, selectedSongId, setSelectedSongId, handleStopOnFinishClick}) {
 
@@ -33,8 +34,8 @@ export default function SongsTable({songs, selectedSongId, setSelectedSongId, ha
                             {song.stopOnFinish === true ?
                                 <AiFillStop
                                     style={{height: "20px", width: "auto", marginTop: "15px"}}/> :
-                                <AiFillStop
-                                    style={{color: "transparent", height: "20px", width: "auto", marginTop: "15px"}}/>}
+                                <IoMdPlay
+                                    style={{height: "20px", width: "auto", marginTop: "15px"}}/>}
                         </button>
                     </td>
                 </tr>
