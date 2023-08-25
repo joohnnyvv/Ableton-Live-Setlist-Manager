@@ -21,7 +21,7 @@ export default function SetlistSection() {
                 const response = await axios.get("http://localhost:3001/cues");
                 const fetchedCues = response.data;
                 setCues(fetchedCues);
-                setMovableCues(fetchedCues);
+                setMovableCues(fetchedCues.filter(cue => cue.name !== "end_cue"));
             } catch (error) {
                 console.error("Error fetching cues:", error);
             }
@@ -31,7 +31,7 @@ export default function SetlistSection() {
     }, []);
 
     useEffect(() => {
-        const updatedCues = cues.map(cue => ({
+        const updatedCues = movableCues.map(cue => ({
             ...cue,
             stopOnFinish: true
         }));
@@ -104,7 +104,7 @@ export default function SetlistSection() {
         }
     };
 
-    const handleMoveSongUp = (songId, e) => {
+    const handleMoveSongUp = (songId) => {
         const songIndex = movableCues.findIndex((song) => song.id === songId);
         if (songIndex > 0) {
             const updatedSongs = [...movableCues];
@@ -114,7 +114,7 @@ export default function SetlistSection() {
         }
     };
 
-    const handleMoveSongDown = (songId, e) => {
+    const handleMoveSongDown = (songId) => {
         const songIndex = movableCues.findIndex((song) => song.id === songId);
         if (songIndex < cues.length - 1) {
             const updatedSongs = [...movableCues];
