@@ -5,7 +5,6 @@ const API_BASE_URL = "http://localhost:3001";
 export async function startPlaying(){
     try {
         const response = await axios.get(`${API_BASE_URL}/start-playing`);
-        console.log(response.data.message);
     } catch (error) {
         console.error("An error occurred:", error);
     }
@@ -13,7 +12,6 @@ export async function startPlaying(){
 export async function stopPlaying() {
     try {
         const response = await axios.get(`${API_BASE_URL}/stop-playing`);
-        console.log(response.data.message);
     } catch (error) {
         console.error("An error occurred:", error);
     }
@@ -27,7 +25,6 @@ export async function sendCueData(cueData){
             }
         });
 
-        console.log(response.data);
     } catch (error) {
         console.error("Error sending cue:", error);
     }

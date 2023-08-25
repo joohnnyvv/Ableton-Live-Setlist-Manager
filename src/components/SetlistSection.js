@@ -52,7 +52,6 @@ export default function SetlistSection() {
 
     useEffect(() => {
         sendSelectedCue();
-        console.log("SENDING CUE!")
     }, [selectedSongId]);
 
     async function updateCurrentTime() {
@@ -72,12 +71,11 @@ export default function SetlistSection() {
                 const isPlayingValue = await fetchIsPlaying();
                 setIsPlaying(isPlayingValue);
                 const time = await updateCurrentTime();
-                console.log("current time", time)
                 advanceToNextSong(time);
             } catch (error) {
                 console.error("Error fetching time/is playing", error);
             }
-        }, 1000);
+        }, 2000);
 
         return () => {
             clearInterval(intervalId);
@@ -86,18 +84,14 @@ export default function SetlistSection() {
 
     const advanceToNextSong = (currentTimeValue) => {
         const currentSongIndex = movableCues.findIndex(song => song.id === selectedSongId);
-        console.log("Current index: ", currentSongIndex);
         if (selectedSongId !== "") {
             if (currentSongIndex !== -1) {
                 if (Math.round(currentTimeValue) >= cues[cues.findIndex(song => song.id === selectedSongId) + 1].time) {
-                    console.log("Time higher than end time... Current time: ", currentTimeValue, "end time: ", cues[cues.findIndex(song => song.id === selectedSongId) + 1].time)
                     if (movableCues[currentSongIndex].stopOnFinish === true && currentSongIndex < cues.length - 1) {
                         stopPlaying();
                         setSelectedSongId(movableCues[currentSongIndex + 1].id);
-                        console.log("Song changed and stopped.")
                     } else if (currentSongIndex < cues.length - 1) {
                         setSelectedSongId(movableCues[currentSongIndex + 1].id);
-                        console.log("Song changed and playing")
                     }
                 }
             }
